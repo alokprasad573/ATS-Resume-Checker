@@ -35,6 +35,11 @@ MANIFEST
 *.safetensors
 *.pkl
 
+# directory_to_ignore/
+Dataset/
+models/
+
+
 #enviroment variables
 .venv/
 venv/
