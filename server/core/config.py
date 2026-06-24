@@ -3,8 +3,14 @@ from pathlib import Path
 
 try:
     from dotenv import load_dotenv
-    _ENV_PATH = Path(__file__).resolve().parents[2] / '.env'
-    load_dotenv(_ENV_PATH)
+    local_env = Path(__file__).resolve().parents[1] / '.env'
+    root_env = Path(__file__).resolve().parents[2] / '.env'
+    if local_env.exists():
+        load_dotenv(local_env, override=True)
+    elif root_env.exists():
+        load_dotenv(root_env, override=True)
+    else:
+        load_dotenv(override=True)
 except ImportError:
     pass
 

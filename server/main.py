@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from server.core.config import ( ALLOWED_ORIGINS, APP_DESCRIPTION, APP_TITLE, APP_VERSION, 
                                  SPACY_MODEL_PRIMARY, SPACY_MODEL_SECONDARY, SENTENCE_TRANSFORMER_MODEL)
-# from server.api.routes import router 
+from server.api.routes import router 
 
 logger = logging.getLogger('stackscore-ats-resume-checker')
 
@@ -52,7 +52,22 @@ app.add_middleware(
     allow_headers=['*']
 )
 
-# app.include_router(router)
+
+@app.get('/')
+async def root():
+    return {
+        'name':      'ATS Resume Analyzer API',
+        'version':   '2.0.0',
+        'endpoints': {
+            'POST   /api/v1/analyze-resume': 'Analyze a resume',
+            'GET    /api/v1/history':        'Get user history',
+            'DELETE /api/v1/history/:id':    'Delete a history entry',
+            'GET    /api/v1/health':         'Health check',
+            'POST   /api/v1/generate-pdf':   'Generate PDF report from data',
+        },
+    }
+
+app.include_router(router)
 
 if __name__ == '__main__':
     import uvicorn
