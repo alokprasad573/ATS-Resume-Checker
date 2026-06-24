@@ -35,6 +35,14 @@ ALLOWED_EXTENSIONS = {'.pdf'}
 
 SPACY_MODEL_PRIMARY="en_core_web_md"
 SPACY_MODEL_SECONDARY="en_core_web_sm"
+
+# Local fine-tuned embedder — trained on resume-JD pairs.
+# Saved as models/finetuned-bert/ by notebooks/FINE_TUNNING.ipynb.
+_REPO_ROOT = Path(__file__).resolve().parents[2]   # ATS-Resume-Checker/
+LOCAL_EMBEDDER_PATH = str(_REPO_ROOT / 'models' / 'finetuned-bert')
+USE_LOCAL_EMBEDDER  = True    # set False to always use the cloud model
+
+# Cloud fallback — downloaded on first run if local model is unavailable.
 SENTENCE_TRANSFORMER_MODEL = "all-MiniLM-L6-v2"
 
 # Score component weights — this is business logic treated as config

@@ -123,11 +123,12 @@ async def analyze_resume(
 
 @router.get('/health')
 async def health_check(request: Request):
-    """Health check — confirms models are loaded and the API is ready."""
+    """Health check — confirms models are loaded and which embedder is active."""
     return {
         'status':          'healthy',
         'nlp_loaded':      request.app.state.nlp is not None,
         'embedder_loaded': request.app.state.embedder is not None,
+        'embedder_model':  getattr(request.app.state, 'embedder_model_name', 'unknown'),
     }
 
 @router.get('/history')

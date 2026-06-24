@@ -7,7 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 from server.core.config import ( ALLOWED_ORIGINS, APP_DESCRIPTION, APP_TITLE, APP_VERSION, 
-                                 SPACY_MODEL_PRIMARY, SPACY_MODEL_SECONDARY, SENTENCE_TRANSFORMER_MODEL)
+                                 SPACY_MODEL_PRIMARY, SPACY_MODEL_SECONDARY,
+                                 SENTENCE_TRANSFORMER_MODEL,
+                                 LOCAL_EMBEDDER_PATH, USE_LOCAL_EMBEDDER)
 from server.api.routes import router 
 
 logger = logging.getLogger('stackscore-ats-resume-checker')
@@ -25,10 +27,25 @@ async def lifespan (app: FastAPI):
         app.state.nlp = spacy.load(SPACY_MODEL_SECONDARY)
         logger.info(f'Loaded {SPACY_MODEL_SECONDARY}')
         
-    logger.info(f'Loading SentenceTransformmer: {SENTENCE_TRANSFORMER_MODEL}')
+    logger.info(f'Loading embedder...')
     from sentence_transformers import SentenceTransformer
-    app.state.embedder = SentenceTransformer(SENTENCE_TRANSFORMER_MODEL)
-    logger.info(f'Loaded SentenceTransformmer {SENTENCE_TRANSFORMER_MODEL}')
+    from pathlib import Path
+
+    if USE_LOCAL_EMBEDDER and Path(LOCAL_EMBEDDER_PATH).exists():
+        logger.info(f'Loading local fine-tuned embedder from: {LOCAL_EMBEDDER_PATH}')
+        app.state.embedder = SentenceTransformer(LOCAL_EMBEDDER_PATH)
+        app.state.embedder_model_name = 'finetuned-bert (local)'
+        logger.info('Local fine-tuned embedder loaded successfully')
+    else:
+        if USE_LOCAL_EMBEDDER:
+            logger.warning(
+                f'Local embedder path not found: {LOCAL_EMBEDDER_PATH}. '
+                f'Falling back to cloud model: {SENTENCE_TRANSFORMER_MODEL}'
+            )
+        logger.info(f'Loading cloud embedder: {SENTENCE_TRANSFORMER_MODEL}')
+        app.state.embedder = SentenceTransformer(SENTENCE_TRANSFORMER_MODEL)
+        app.state.embedder_model_name = f'{SENTENCE_TRANSFORMER_MODEL} (cloud)'
+        logger.info(f'Cloud embedder loaded: {SENTENCE_TRANSFORMER_MODEL}')
       
     logger.info(f'Server is ready...')
     yield
