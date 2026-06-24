@@ -82,9 +82,11 @@ ATS-Resume-Checker/
 │       └── matching.py             # Fuzzy matching utilities
 │
 ├── notebooks/                      # ML research & experimentation
+|   ├── pdfs                        # Resumes Folder
 │   ├── EDA.ipynb                   # Exploratory Data Analysis
 │   ├── BERT.ipynb                  # BERT embedding experiments
-│   └── FINE_TUNNING.ipynb          # BERT fine-tuning pipeline
+|   ├── FINE_TUNNING.ipynb          # BERT fine-tuning pipeline     
+│   └── Testing_BERT.ipynb          # BERT Testing pipeline
 │
 ├── models/                         # Trained model artifacts
 │   ├── resume_embedding.pkl        # Pre-computed resume embeddings
@@ -283,7 +285,7 @@ The `notebooks/` directory documents the full ML research pipeline.
 
 ## 🚀 API Reference
 
-Base URL: `http://localhost:8000/api/v1`
+Base URL: `http://127.0.0.1:8000/api/v1`
 
 All endpoints (except `/health`) require:
 ```
