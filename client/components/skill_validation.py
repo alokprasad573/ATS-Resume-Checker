@@ -10,7 +10,7 @@ def display_skill_validation(analysis: Dict[str, Any]) -> None:
     total = details.get("total", len(validated) + len(unvalidated))
     pct = details.get("validation_pct", 0.0)
 
-    st.markdown("### ✅ Skill Validation")
+    st.markdown("### Skill validation")
 
     if total == 0:
         st.info("No skills detected on the resume.")
@@ -24,7 +24,7 @@ def display_skill_validation(analysis: Dict[str, Any]) -> None:
     st.progress(min(max(pct / 100.0, 0.0), 1.0))
 
     if validated:
-        with st.expander(f"✅ Validated skills ({len(validated)})", expanded=False):
+        with st.expander(f"Validated skills ({len(validated)})", expanded=False):
             for entry in validated:
                 skill = entry.get("skill", "?")
                 projects = entry.get("projects", []) or []
@@ -32,10 +32,28 @@ def display_skill_validation(analysis: Dict[str, Any]) -> None:
 
                 project_text = ", ".join(projects[:3]) if projects else "experience section"
                 sim_text = f" ({similarity * 100:.0f}% match)" if isinstance(similarity, (int, float)) else ""
-                st.markdown(f"- **{skill}**{sim_text} — demonstrated in: {project_text}")
+                st.markdown(
+                    f"""
+                    <div class="action-row">
+                        <span class="status-chip success">Validated</span>
+                        <strong style="color:var(--text-primary); margin-left:0.45rem;">{skill}</strong>
+                        <span style="color:var(--text-muted);">{sim_text}</span>
+                        <div style="color:var(--text-secondary); margin-top:0.35rem;">Demonstrated in: {project_text}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
 
     if unvalidated:
-        with st.expander(f"⚠️ Unvalidated skills ({len(unvalidated)})", expanded=False):
+        with st.expander(f"Unvalidated skills ({len(unvalidated)})", expanded=False):
             st.caption("These skills are listed but not tied to a project or experience bullet.")
             for skill in unvalidated:
-                st.markdown(f"- ❌ {skill}")
+                st.markdown(
+                    f"""
+                    <div class="action-row">
+                        <span class="status-chip warning">Needs evidence</span>
+                        <strong style="color:var(--text-primary); margin-left:0.45rem;">{skill}</strong>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )

@@ -8,6 +8,13 @@ def display_recommendations(analysis: Dict[str, Any]) -> None:
     if not suggestions:
         return
 
-    st.markdown("### 💡 Recommendations")
+    st.markdown("### Recommendations")
     for suggestion in suggestions:
-        st.markdown(f"- {suggestion}")
+        st.markdown(
+            f"""
+            <div class="coach-note" style="margin-bottom:0.6rem;">
+                {suggestion}
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )

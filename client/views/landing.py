@@ -2,98 +2,58 @@ import streamlit as st
 
 
 def render():
-    
-    # Landing page CSS
     st.markdown("""
-    <style>
-        .main-header {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #9333EA 100%);
-            color: white;
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 40px rgba(79, 70, 229, 0.3);
-        }
-        .main-header h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-    </style>
-    """, unsafe_allow_html=True)
-    
-    # Hero Section
-    st.markdown("""
-    <div class="main-header">
-        <h1>🎯 Stackscore | ATS Resume Checker</h1>
-        <h3>Optimize Your Resume for Applicant Tracking Systems</h3>
-        <p>Get instant feedback on your resume's ATS compatibility with AI-powered analysis</p>
+    <div class="console-hero">
+        <div class="eyebrow">Resume intelligence workspace</div>
+        <h1>Stackscore</h1>
+        <p>Review your resume like a recruiter and improve it like a coach is sitting beside you. Upload a resume, compare it with a job description, and leave with a prioritized fix list.</p>
     </div>
     """, unsafe_allow_html=True)
-    
-    # Call-to-Action Button
+
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        if st.button("🚀 Start Analyzing Your Resume", use_container_width=True, type="primary"):
+        if st.button("Start resume review", use_container_width=True, type="primary"):
             st.session_state.current_view = 'scorer'
             st.rerun()
-    
-    st.markdown("---")
-    
-    # Features Overview
-    st.markdown("## ✨ Key Features")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("""
-        ### 📊 Comprehensive Scoring
-        Get detailed scores across 5 key dimensions:
-        - Formatting (20%)
-        - Keywords & Skills (25%)
-        - Content Quality (25%)
-        - Skill Validation (15%)
-        - ATS Compatibility (15%)
-        """)
-    
-    with col2:
-        st.markdown("""
-        ### 🔍 Skill Validation
-        Verify that your claimed skills are demonstrated in your projects and experience using AI-powered semantic analysis.
-        
-        **No more empty claims!**
-        """)
-    
-    with col3:
-        st.markdown("""
-        ### 🔒 Privacy First
-        All analysis runs locally with no external API calls. Your resume data never leaves your system.
-        
-        **100% Private & Secure**
-        """)
-    
-    st.markdown("---")
-    
-    # How It Works
-    st.markdown("## 🚀 How It Works")
-    
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("""
-        #### 1️⃣ Upload Your Resume
-        Support for PDF, DOC, and DOCX formats
-        """)
-    
-    with col2:
-        st.markdown("""
-        #### 2️⃣ AI Analysis
-        Our local AI models analyze your resume across multiple dimensions
-        """)
-    
-    with col3:
-        st.markdown("""
-        #### 3️⃣ Get Actionable Feedback
-        Receive detailed recommendations to improve your resume
-        """)
+
+    st.markdown("## What you get")
+    st.markdown("""
+    <div class="console-grid">
+        <div class="feature-panel">
+            <div class="panel-kicker">Recruiter lens</div>
+            <h3 class="panel-title">Five-part ATS score</h3>
+            <p style="color:var(--text-secondary); margin-bottom:0;">Formatting, keywords, content quality, skill evidence, and ATS compatibility are scored separately so weak areas are easy to spot.</p>
+        </div>
+        <div class="feature-panel">
+            <div class="panel-kicker">Candidate coach</div>
+            <h3 class="panel-title">Prioritized fixes</h3>
+            <p style="color:var(--text-secondary); margin-bottom:0;">Issues are grouped by urgency with concrete action items, not vague advice that leaves you guessing what to edit first.</p>
+        </div>
+        <div class="feature-panel">
+            <div class="panel-kicker">Targeted match</div>
+            <h3 class="panel-title">JD comparison</h3>
+            <p style="color:var(--text-secondary); margin-bottom:0;">Paste a job description to compare semantic fit, matched keywords, missing terms, and skill gaps for that exact role.</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("## Workflow")
+    st.markdown("""
+    <div class="console-grid">
+        <div class="workflow-panel">
+            <div class="panel-number">1</div>
+            <h3 class="panel-title">Upload</h3>
+            <p style="color:var(--text-secondary); margin-bottom:0;">Start with a resume PDF, DOC, or DOCX.</p>
+        </div>
+        <div class="workflow-panel">
+            <div class="panel-number">2</div>
+            <h3 class="panel-title">Compare</h3>
+            <p style="color:var(--text-secondary); margin-bottom:0;">Use general ATS scoring or add a job description for a role-specific review.</p>
+        </div>
+        <div class="workflow-panel">
+            <div class="panel-number">3</div>
+            <h3 class="panel-title">Improve</h3>
+            <p style="color:var(--text-secondary); margin-bottom:0;">Work through the fix list, export the report, and track progress in history.</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)

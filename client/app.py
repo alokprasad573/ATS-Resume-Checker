@@ -50,7 +50,7 @@ if (
 #Load custom CSS
 def load_css():
     try:
-        css_path = Path(__file__).parent / 'assets' / 'styles.css'
+        css_path = Path(__file__).parent / 'assets' / 'style.css'
         with open(css_path, 'r') as f:
             return f'<style>{f.read()}</style>'
     except FileNotFoundError:
@@ -64,7 +64,16 @@ if 'current_view' not in st.session_state:
 
 # Sidebar navigation
 with st.sidebar:
-    st.markdown("## Navigation")
+    st.markdown(
+        """
+        <div style="text-align: center; padding: 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 1.5rem;">
+            <span style="font-size: 2.5rem;">🎯</span>
+            <h2 style="margin: 0.5rem 0 0 0; font-size: 1.6rem; background: linear-gradient(135deg, #FFF 30%, #FBBF24 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Stackscore</h2>
+            <span style="font-size: 0.8rem; color: #64748B; letter-spacing: 0.05em; text-transform: uppercase;">ATS Resume Checker</span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
     
     if st.button("🏠 Home", use_container_width=True):
         st.session_state.current_view = 'landing'

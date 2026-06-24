@@ -29,9 +29,27 @@ def display_action_items(analysis: Dict[str, Any]) -> None:
     if not items:
         return
 
-    st.markdown("### ⚡ Action Items")
+    st.markdown("### Action items")
     st.caption("Concrete steps to improve your score, sorted by urgency.")
 
     for level, source, action in items:
-        icon = {"critical": "🔴", "high": "🟠", "medium": "🟡", "low": "🟢"}.get(level, "🟢")
-        st.markdown(f"- {icon} **[{source}]** {action}")
+        chip_class = {
+            "critical": "danger",
+            "high": "danger",
+            "medium": "warning",
+            "low": "success",
+        }.get(level, "coach")
+        st.markdown(
+            f"""
+            <div class="action-row">
+                <div style="display:flex; gap:0.6rem; align-items:flex-start;">
+                    <span class="status-chip {chip_class}">{level.title()}</span>
+                    <div>
+                        <div style="color:var(--text-muted); font-size:0.78rem; font-weight:700; margin-bottom:0.2rem;">{source or "General"}</div>
+                        <div style="color:var(--text-primary);">{action}</div>
+                    </div>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
